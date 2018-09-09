@@ -1,16 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:layout_margin="0dp"
+    android:weightSum="1"
+    android:orientation="vertical"
     android:id="@+id/container">
 
-   <TextView
-       android:layout_width="wrap_content"
+   <LinearLayout
+       android:id="@+id/linLayout"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="TimeLine"
-       android:textSize="15dp"/>
+       android:orientation="horizontal"
+       android:weightSum="4"
+       >
+
+      <Button
+          android:id="@+id/btn1"
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_weight="1"
+          android:background="#000000"
+          android:scaleType="fitCenter"
+          android:text="| 전 체 |"
+          android:textColor="#FFFFFF"
+          android:textSize="16sp" />
+
+      <Button
+          android:id="@+id/btn2"
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_weight="1"
+          android:background="#000000"
+          android:text="|통화기록|"
+          android:textColor="#FFFFFF"
+          android:textSize="16sp" />
+
+      <Button
+          android:id="@+id/btn3"
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_weight="1"
+          android:background="#000000"
+          android:text="|문자기록|"
+          android:textColor="#FFFFFF"
+          android:textSize="16sp" />
+
+      <Button
+          android:id="@+id/btn4"
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_weight="1"
+          android:background="#000000"
+          android:text="|어플기록|"
+          android:textColor="#FFFFFF"
+          android:textSize="16sp"/>
+
+   </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/recycler_test"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1">
+
+   </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
