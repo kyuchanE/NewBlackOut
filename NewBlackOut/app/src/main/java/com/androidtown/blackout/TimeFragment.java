@@ -25,7 +25,7 @@ public class TimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_time, container, false);
 
 
-        Activity activity = (MainActivity)getActivity();
+        Activity activity = (ResultActivity)getActivity();
 
 
         //*1time위해 추가한것
