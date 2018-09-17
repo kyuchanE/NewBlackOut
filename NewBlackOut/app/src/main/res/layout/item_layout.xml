@@ -15,6 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:maxLength="11"
+            android:textSize="12sp"
             android:text="time"/>
         <ImageView
             android:id="@+id/ivIcon"
@@ -28,7 +30,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:maxLength="6"
             android:text="카카오톡"/>
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:maxLength="16"
+            android:text="번호"/>
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:maxLength="4"
+            android:text="시간"/>
 
 
         <ImageView
@@ -36,7 +55,7 @@
             android:src="@drawable/ic_chevron_right_black_24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="right|center_vertical"
             android:scaleType="fitEnd"/>
     </LinearLayout>
 

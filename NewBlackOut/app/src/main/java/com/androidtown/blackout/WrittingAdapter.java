@@ -26,7 +26,6 @@ public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         MyViewholder viewholder1 = new MyViewholder(view);
 
-
         return viewholder1;
     }
 
@@ -34,13 +33,17 @@ public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyView
     public void onBindViewHolder(WrittingAdapter.MyViewholder holder, int position) {
         ItemForm data = datalist.get(position);
         //초기화 해볼려고 넣음 없어도 될 것 같음 다시 해봐야됨
-        holder.personalId.setText("");
+        holder.date.setText("");
         holder.profile.setImageResource(0);
-        holder.writtingTxt.setText("");
+        holder.name.setText("");
+        holder.number.setText("");
+        holder.duration.setText("");
 
-        holder.personalId.setText(data.getId());
+        holder.date.setText(data.getDate());
         holder.profile.setImageResource(data.getImageNumber());
-        holder.writtingTxt.setText(data.getTxt());
+        holder.name.setText(data.getName());
+        holder.number.setText(data.getNumber());
+        holder.duration.setText(data.getDuration());
 
     }
 
@@ -51,15 +54,19 @@ public class WrittingAdapter extends RecyclerView.Adapter<WrittingAdapter.MyView
 
     public class MyViewholder extends RecyclerView.ViewHolder {
         ImageView profile;
-        TextView writtingTxt;
-        TextView personalId;
+        TextView name;
+        TextView date;
+        TextView number;
+        TextView duration;
 
         public MyViewholder(View itemview) {
             super(itemview);
 
             profile = (ImageView) itemview.findViewById(R.id.ivIcon);
-            writtingTxt = (TextView) itemview.findViewById(R.id.tvName);
-            personalId = (TextView) itemview.findViewById(R.id.tvTime);
+            name = (TextView) itemview.findViewById(R.id.tvName);
+            date = (TextView) itemview.findViewById(R.id.tvTime);
+            number = (TextView) itemview.findViewById(R.id.tvNumber);
+            duration = (TextView) itemview.findViewById(R.id.tvDuration);
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,6 +1,7 @@
 package com.androidtown.blackout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -28,6 +29,7 @@ public class TimeFragment extends Fragment {
     WrittingAdapter wadapter;
     Cursor c;
 
+    @SuppressLint("MissingPermission")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,18 +57,21 @@ public class TimeFragment extends Fragment {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return null;
+            Log.e("@@@@@22", "@@@@@22");
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALL_LOG}, 3);
+            Log.e("@@@@@33", "@@@@@33");
         }
         c = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, null);
 
 
 
         while (c.moveToNext()) {
+            Log.e("@@@@@44", "@@@@@44");
 
             String type;
             // 날짜시간
             long callDate = c.getLong(c.getColumnIndex(CallLog.Calls.DATE));
-            SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
             String date_str = dFormat.format(new Date(callDate));
             // 연락처 대표 이름
             String name = c.getString(c.getColumnIndex(CallLog.Calls.CACHED_NAME));
@@ -81,9 +86,9 @@ public class TimeFragment extends Fragment {
             //통화시간
             String duration = c.getString(c.getColumnIndex(CallLog.Calls.DURATION));
 
-            list.add(new ItemForm(duration,R.drawable.kkko2,name));
+            list.add(new ItemForm(date_str,R.drawable.kkko2,name,pNumber,duration));
         }// end while
-        c.close();
+        c.close();Log.e("@@@@@55", "@@@@@55");
 
 
 
