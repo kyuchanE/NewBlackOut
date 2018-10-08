@@ -47,6 +47,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         polyline = new PolylineOptions();
 
+
+        setList();
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,24 +60,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        setList();
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng home = new LatLng(37.581072, 126.920668);
+
         MarkerOptions marker = new MarkerOptions();
-
-
-        marker.position(home).title("Home");
-
-        mMap.addMarker(marker);
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 15));
 
         polyline.geodesic(true);
 
@@ -82,6 +71,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             polyline.add(new LatLng(listLat.get(i), listLng.get(i)));
         }
         mMap.addPolyline(polyline);
+
+        LatLng startpoint = new LatLng(listLat.get(0), listLng.get(0));
+        marker.position(startpoint).title("시작");
+        mMap.addMarker(marker);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startpoint, 15));
 
         Log.e("@@@@@", String.valueOf(listLat.size()));
         Toast.makeText(MapsActivity.this, "몇번" + String.valueOf(listLat.size()), Toast.LENGTH_SHORT).show();
