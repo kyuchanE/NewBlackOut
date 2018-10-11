@@ -32,7 +32,7 @@
           app:layout_constraintBottom_toBottomOf="parent"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="버튼"/>
+          android:text="시작"/>
 
     </android.support.constraint.ConstraintLayout>
 

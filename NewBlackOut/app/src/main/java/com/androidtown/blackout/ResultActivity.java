@@ -22,8 +22,6 @@ public class ResultActivity extends AppCompatActivity{
 
     public static Context mContext;
 
-    GpsInfo gps;
-
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -35,6 +33,7 @@ public class ResultActivity extends AppCompatActivity{
 
         bottomView = findViewById(R.id.bottom_navigation);
 
+
         gpsFrag = new GpsFragment();
         timeFrag = new TimeFragment();
         mContext = this;
@@ -42,11 +41,10 @@ public class ResultActivity extends AppCompatActivity{
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        gps = new GpsInfo(ResultActivity.this);
-
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,},1);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, 3);
+
 
         bottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

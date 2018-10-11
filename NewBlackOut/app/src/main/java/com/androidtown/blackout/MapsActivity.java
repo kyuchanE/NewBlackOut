@@ -1,5 +1,6 @@
 package com.androidtown.blackout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,12 +25,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private ImageButton btnBack;
 
-    private ArrayList<Double> listLat;
-    private ArrayList<Double> listLng;
+    private ArrayList<String> listLat;
+    private ArrayList<String> listLng;
 
     PolylineOptions polyline;
-
-    GpsInfo gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +39,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFrag.getMapAsync(this);
 
         btnBack = findViewById(R.id.btnBack);
-        gps = ((ResultActivity)ResultActivity.mContext).gps;
 
         listLng = new ArrayList<>();
         listLat = new ArrayList<>();
 
         polyline = new PolylineOptions();
 
-
-        setList();
+        Intent recive = getIntent();
+        listLat = recive.getStringArrayListExtra("lat");
+        listLng = recive.getStringArrayListExtra("lng");
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +67,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         polyline.geodesic(true);
 
         for(int i = 0; i < listLng.size(); i++){
-            polyline.add(new LatLng(listLat.get(i), listLng.get(i)));
+            polyline.add(new LatLng(Double.parseDouble(listLat.get(i)), Double.parseDouble(listLng.get(i))));
         }
         mMap.addPolyline(polyline);
 
-        LatLng startpoint = new LatLng(listLat.get(0), listLng.get(0));
+        LatLng startpoint = new LatLng(Double.parseDouble(listLat.get(0)), Double.parseDouble(listLng.get(0)));
         marker.position(startpoint).title("시작");
         mMap.addMarker(marker);
 
@@ -84,14 +83,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         return;
 
-    }
-
-    public void setList(){
-        listLat.clear();
-        listLng.clear();
-
-        listLat = gps.setLatList();
-        listLng = gps.setLngList();
     }
 
 

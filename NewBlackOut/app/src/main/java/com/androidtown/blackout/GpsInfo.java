@@ -1,13 +1,17 @@
 package com.androidtown.blackout;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -19,8 +23,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class GpsInfo extends Service implements LocationListener {
-
-    private final Context mContext;
 
     //현재 GPS 사용 유무
     boolean isGPSEnabled = false;
@@ -34,8 +36,10 @@ public class GpsInfo extends Service implements LocationListener {
     double lat;
     double lon;
 
-    ArrayList<Double> listLat;
-    ArrayList<Double> listLng;
+    ArrayList<String> listLat;
+    ArrayList<String> listLng;
+
+    MediaPlayer mp;
 
     //최소 GPS 정보 업데이트 거리 5미터
     private static final long MIN_DISTANCE = 1;
@@ -45,21 +49,41 @@ public class GpsInfo extends Service implements LocationListener {
 
     protected LocationManager locationManager;
 
-    public GpsInfo(Context mContext) {
-        this.mContext = mContext;
+    private IBinder mBinder = new LocalBinder();
+
+    public class LocalBinder extends Binder {
+        public GpsInfo getService(){
+            return GpsInfo.this;
+        }
+    }
+
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         listLng = new ArrayList<>();
         listLat = new ArrayList<>();
         getLocation();
+
+        Log.d("test", "서비스의 onCreate");
+        mp = MediaPlayer.create(this, R.raw.chacha);
+        mp.setLooping(true);
     }
 
     public Location getLocation(){
         if(Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             return null;
         }
         try{
-            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+            locationManager = (LocationManager) (MainActivity.mContext).getSystemService(LOCATION_SERVICE);
 
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -94,11 +118,11 @@ public class GpsInfo extends Service implements LocationListener {
         }catch (Exception e){
             e.printStackTrace();
         }
-        listLat.add(lat);
-        listLng.add(lon);
+        listLat.add(Double.toString(lat));
+        listLng.add(Double.toString(lon));
         Log.e("Lat 1st", Double.toString(lat));
         Log.e("Lng 1st", Double.toString(lon));
-        Toast.makeText((ResultActivity)ResultActivity.mContext, "시작" + Double.toString(lat) + "/" + Double.toString(lon) , Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.mContext, "시작" + Double.toString(lat) + "/" + Double.toString(lon) , Toast.LENGTH_SHORT).show();
         return location;
     }
 
@@ -127,30 +151,25 @@ public class GpsInfo extends Service implements LocationListener {
         return isGetLocation;
     }
 
-    public ArrayList<Double> setLatList(){
+    public ArrayList<String> setLatList(){
         return listLat;
     }
 
-    public ArrayList<Double> setLngList(){
+    public ArrayList<String> setLngList(){
         return listLng;
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
 
     @Override
     public void onLocationChanged(Location location) {
         lon = location.getLongitude();
         lat = location.getLatitude();
 
-        listLat.add(lat);
-        listLng.add(lon);
+        listLat.add(Double.toString(lat));
+        listLng.add(Double.toString(lon));
         Log.e("Lat", Double.toString(lat));
         Log.e("Lng", Double.toString(lon));
-        Toast.makeText((ResultActivity)ResultActivity.mContext, "위치변화" + Double.toString(lat) + "/" + Double.toString(lon) , Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.mContext, "위치변화" + Double.toString(lat) + "/" + Double.toString(lon) , Toast.LENGTH_SHORT).show();
 
     }
 
@@ -167,5 +186,41 @@ public class GpsInfo extends Service implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("test", "서비스의 onStratCommand");
+        mp.start();
+        startForeground(1, new Notification());
+
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            notification = new Notification.Builder(getApplicationContext())
+                    .setContentTitle("")
+                    .setContentText("")
+                    .build();
+        }else{
+            notification = new Notification(0, "", System.currentTimeMillis());
+
+        }
+        //nm.notify(startId, notification);
+
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("test", "서비스의 onDestroy");
+        stopUsingGPS();
+        mp.stop();
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        intent.putStringArrayListExtra("lat", listLat);
+        intent.putStringArrayListExtra("lng", listLng);
+        startActivity(intent);
     }
 }
