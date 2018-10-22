@@ -1,9 +1,7 @@
 package com.androidtown.blackout;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,11 +49,12 @@ public class GpsInfo extends Service implements LocationListener {
 
     private IBinder mBinder = new LocalBinder();
 
-    public class LocalBinder extends Binder {
-        public GpsInfo getService(){
-            return GpsInfo.this;
-        }
+
+public class LocalBinder extends Binder {
+    public GpsInfo getService(){
+        return GpsInfo.this;
     }
+}
 
 
     @Nullable
@@ -188,26 +187,12 @@ public class GpsInfo extends Service implements LocationListener {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("test", "서비스의 onStratCommand");
         mp.start();
+
         startForeground(1, new Notification());
-
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            notification = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("")
-                    .setContentText("")
-                    .build();
-        }else{
-            notification = new Notification(0, "", System.currentTimeMillis());
-
-        }
-        //nm.notify(startId, notification);
-
 
         return super.onStartCommand(intent, flags, startId);
     }
