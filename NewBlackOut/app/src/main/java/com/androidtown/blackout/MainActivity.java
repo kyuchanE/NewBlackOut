@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     Boolean mBound;
     ServiceConnection mConnection;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, 3);
 
         mContext = this;
+
         btnStart = findViewById(R.id.btnStart);
 
         mConnection = new ServiceConnection() {
@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                         startService(service);
 
 
+
+
                     }else{
                         Log.d("test", "결과 화면 버튼");
                         btnStart.setText("시작");
@@ -138,5 +140,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e("@@@@@@@@@@@@@@@@@@@@@", "false");
         return false;
     }
+
 
 }
