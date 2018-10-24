@@ -1,17 +1,19 @@
 package com.androidtown.blackout;
 
-import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
-public class ResultActivity extends AppCompatActivity{
+import java.util.ArrayList;
+
+public class ResultActivity extends AppCompatActivity {
 
     private ToolBar toolbar;
 
@@ -22,6 +24,9 @@ public class ResultActivity extends AppCompatActivity{
 
     public static Context mContext;
 
+    public ArrayList<String> listLat;
+    public ArrayList<String> listLng;
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -31,19 +36,27 @@ public class ResultActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        bottomView = findViewById(R.id.bottom_navigation);
+        listLng = new ArrayList<>();
+        listLat = new ArrayList<>();
 
+        Intent recive = getIntent();
+        listLat = recive.getStringArrayListExtra("lat");
+        listLng = recive.getStringArrayListExtra("lng");
+        Log.e("@@@Result/lat[0]@@@", listLat.get(0));
+
+        bottomView = findViewById(R.id.bottom_navigation);
 
         gpsFrag = new GpsFragment();
         timeFrag = new TimeFragment();
         mContext = this;
 
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("lat", listLat);
+        bundle.putStringArrayList("lng", listLng);
+        gpsFrag.setArguments(bundle);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,},1);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, 3);
 
 
         bottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

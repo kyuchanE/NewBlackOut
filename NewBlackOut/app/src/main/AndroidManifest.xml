@@ -28,7 +28,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".ResultActivity" />
-        <activity android:name=".MapsActivity"></activity>
 
         <service android:name=".GpsInfo"
             android:enabled="true"

@@ -79,6 +79,7 @@ public class LocalBinder extends Binder {
         if(Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
             return null;
         }
         try{
@@ -203,9 +204,10 @@ public class LocalBinder extends Binder {
         Log.d("test", "서비스의 onDestroy");
         stopUsingGPS();
         mp.stop();
-        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
         intent.putStringArrayListExtra("lat", listLat);
         intent.putStringArrayListExtra("lng", listLng);
+        Log.e("@@@gpsDestroy/lat[0]@@@", listLat.get(0));
         startActivity(intent);
     }
 }
