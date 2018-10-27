@@ -21,6 +21,7 @@ public class ResultActivity extends AppCompatActivity {
 
     private GpsFragment gpsFrag;
     private TimeFragment timeFrag;
+    private TestFragment testFrag;
 
     public static Context mContext;
 
@@ -48,6 +49,7 @@ public class ResultActivity extends AppCompatActivity {
 
         gpsFrag = new GpsFragment();
         timeFrag = new TimeFragment();
+        testFrag = new TestFragment();
         mContext = this;
 
         Bundle bundle = new Bundle();
@@ -66,15 +68,22 @@ public class ResultActivity extends AppCompatActivity {
                     case R.id.action_map:
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fl, gpsFrag).commit();
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                        getSupportFragmentManager().beginTransaction().commit();
                         break;
 
                     case R.id.action_home:
 
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fl, testFrag).commit();
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                        getSupportFragmentManager().beginTransaction().commit();
                         break;
 
                     case R.id.action_timeline:
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fl, timeFrag).commit();
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                        getSupportFragmentManager().beginTransaction().commit();
                         break;
                 }
                 return true;

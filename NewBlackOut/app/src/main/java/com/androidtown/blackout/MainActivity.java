@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,15 +22,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnStart;
+
+    MyDBHelper myDBHelper;
+    SQLiteDatabase sqlDB;
 
     public static Context mContext;
 
     GpsInfo mService;
     Boolean mBound;
     ServiceConnection mConnection;
+
+    int bNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
+        myDBHelper = new MyDBHelper(this);
+
         btnStart = findViewById(R.id.btnStart);
+
+        changeButton(getButtonDB());
 
         mConnection = new ServiceConnection() {
             @Override
@@ -61,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+
+                Date dt = new Date();
+                SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm a");
+                Log.e("@@@@@DATE@@@@@@", time.format(dt).toString());
 
                 if(Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -100,19 +122,22 @@ public class MainActivity extends AppCompatActivity {
                     if (!(isServiceRunningCheck())){
                         // gps 실행중 화면은 메인 화면
                         Log.d("test", "gps 실행 경로 저장중");
-                        btnStart.setText("결과보기");
+
                         Intent service = new Intent(getApplicationContext(), GpsInfo.class);
                         startService(service);
+
+                        setButtonDB(1);
 
 
 
 
                     }else{
                         Log.d("test", "결과 화면 버튼");
-                        btnStart.setText("시작");
 
                         Intent service = new Intent(getApplicationContext(), GpsInfo.class);
                         stopService(service);
+
+                        setButtonDB(0);
 
                     }
                 }
@@ -139,6 +164,37 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);*/
         Log.e("@@@@@@@@@@@@@@@@@@@@@", "false");
         return false;
+    }
+
+    public void setButtonDB(int num){
+        int cnt;
+        cnt = num;
+        sqlDB = myDBHelper.getWritableDatabase();
+        sqlDB.execSQL("INSERT INTO buttonTBL VALUES (" + cnt + ");");
+        sqlDB.close();
+    }
+
+    public int getButtonDB(){
+        bNum = 0;
+        sqlDB = myDBHelper.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT * FROM buttonTBL;", null);
+
+        while(cursor.moveToNext()){
+            bNum = cursor.getInt(0);
+        }
+
+        cursor.close();
+
+        return bNum;
+    }
+
+    public void changeButton(int cnt){
+        if(cnt == 0){
+            btnStart.setText("시작");
+        }else{
+            btnStart.setText("결과보기");
+        }
     }
 
 
