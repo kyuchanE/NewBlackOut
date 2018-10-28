@@ -12,9 +12,11 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     int bNum;
 
+    ConstraintLayout main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         myDBHelper = new MyDBHelper(this);
 
         btnStart = findViewById(R.id.btnStart);
+
+        main = findViewById(R.id.main);
 
         changeButton(getButtonDB());
 
@@ -75,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -131,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                     }else{
                         Log.d("test", "결과 화면 버튼");
 
@@ -151,6 +157,19 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setToolbar();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(getButtonDB() == 0){
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_1);
+            main.setBackground(drawable);
+
+        }else{
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_2);
+            main.setBackground(drawable);
+
+        }
+    }
 
     public boolean isServiceRunningCheck(){
         ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
