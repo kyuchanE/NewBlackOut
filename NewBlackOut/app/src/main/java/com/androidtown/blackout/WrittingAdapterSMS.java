@@ -33,26 +33,18 @@ public class WrittingAdapterSMS extends RecyclerView.Adapter<WrittingAdapterSMS.
     public void onBindViewHolder(WrittingAdapterSMS.MyViewholder holder, int position) {
         ItemFormSMS data = datalist.get(position);
         //초기화 해볼려고 넣음 없어도 될 것 같음 다시 해봐야됨
-        holder.txt1.setText("");
-        holder.txt2.setText("");
-        holder.txt3.setText("");
-        holder.txt4.setText("");
-        holder.txt5.setText("");
-        holder.txt6.setText("");
-        holder.txt7.setText("");
-        holder.txt8.setText("");
-        holder.profile.setImageResource(0);
+        holder.tvTime.setText("");
+        holder.tvName.setText("");
+        holder.tvNumber.setText("");
+        holder.tvBody.setText("");
+        holder.ivIcon.setImageResource(0);
 
 
-        holder.txt1.setText(data.getMessageId());
-        holder.txt2.setText(data.getThreadId());
-        holder.txt3.setText(data.getAddress());
-        holder.txt4.setText(data.getContactId());
-        holder.txt5.setText(data.getContactId_string());
-        holder.txt6.setText(data.getTimestamp());
-        holder.txt7.setText(data.getBody());
-        holder.txt8.setText(data.getRead());
-        holder.profile.setImageResource(data.getImageNumber1());
+        holder.tvTime.setText(data.getTimetamp());
+        holder.tvName.setText(data.getContactId_string());
+        holder.tvNumber.setText(data.getmType());
+        holder.tvBody.setText(data.getBody());
+        holder.ivIcon.setImageResource(data.getImageNumber1());
 
 
     }
@@ -63,21 +55,17 @@ public class WrittingAdapterSMS extends RecyclerView.Adapter<WrittingAdapterSMS.
     }
 
     public class MyViewholder extends RecyclerView.ViewHolder {
-        ImageView profile;
-        TextView txt1, txt2, txt3 ,txt4 ,txt5 ,txt6 ,txt7,txt8;
+        ImageView ivIcon;
+        TextView tvTime,tvName,tvNumber,tvBody;
 
         public MyViewholder(View itemview) {
             super(itemview);
 
-            txt1 = (TextView) itemview.findViewById(R.id.txt1);
-            txt2 = (TextView) itemview.findViewById(R.id.txt2);
-            txt3 = (TextView) itemview.findViewById(R.id.txt3);
-            txt4 = (TextView) itemview.findViewById(R.id.txt4);
-            txt5 = (TextView) itemview.findViewById(R.id.txt5);
-            txt6 = (TextView) itemview.findViewById(R.id.txt6);
-            txt7 = (TextView) itemview.findViewById(R.id.txt7);
-            txt8= (TextView) itemview.findViewById(R.id.txt8);
-            profile = (ImageView) itemview.findViewById(R.id.ivIcon);
+            tvTime = (TextView) itemview.findViewById(R.id.tvTime);
+            tvName = (TextView) itemview.findViewById(R.id.tvName);
+            tvNumber = (TextView) itemview.findViewById(R.id.tvNumber);
+            tvBody = (TextView) itemview.findViewById(R.id.tvBody);
+            ivIcon = (ImageView) itemview.findViewById(R.id.ivIcon);
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -2,40 +2,23 @@ package com.androidtown.blackout;
 
 public class ItemFormSMS {
 
-    private String address,threadId,contactId, contactId_string,timestamp, body,read,messageId;//보안을 위해서 private로
+    private String timetamp, contactId_string, mType, address, body, read;//보안을 위해서 private로
     private int imageNumber;
 
 
-    public ItemFormSMS(String messageId, String threadId, String address, long contactId, String contactId_string, String timetamp, String body, long read, int imageNumber1) {//new생성자를 통해서 생성자가 만들어진다.
-        this.messageId = messageId;
-        this.threadId = threadId;
-        this.address = address;
-        this.contactId = String.valueOf(contactId);
+    public ItemFormSMS(String timetamp,String contactId_string,String mType,String address,String body,long read ,  int imageNumber1) {//new생성자를 통해서 생성자가 만들어진다.
+        this.timetamp = timetamp;
         this.contactId_string = contactId_string;
-        this.timestamp = timetamp;
+        this.mType = mType;
+        this.address = address;
         this.body = body;
         this.read = String.valueOf(read);
         this.imageNumber = imageNumber1;
     }
 
-    public String getMessageId() {//외부로 id값을 리턴해서 내보내준다.
+    public String getTimetamp() {
 
-        return messageId;
-    }
-
-    public String getThreadId() {//외부로 이미지 값을 리턴해서 보내준다.
-
-        return threadId;
-    }
-
-    public String getAddress() {
-
-        return address;
-    }
-
-    public String getContactId() {
-
-        return contactId;
+        return timetamp;
     }
 
     public String getContactId_string() {
@@ -43,9 +26,14 @@ public class ItemFormSMS {
         return contactId_string;
     }
 
-    public String getTimestamp() {
+    public String getmType() {
 
-        return timestamp;
+        return mType;
+    }
+
+    public String getAddress() {
+
+        return address;
     }
 
     public String getBody() {
@@ -64,24 +52,9 @@ public class ItemFormSMS {
     }
 
 
-    public void setMessageId(String messageId) {//외부로 id값을 리턴해서 내보내준다.
+    public void setTimetamp(String timetamp) {
 
-        this.messageId = messageId;
-    }
-
-    public void setThreadId(String threadId) {//외부로 이미지 값을 리턴해서 보내준다.
-
-        this.threadId = threadId;
-    }
-
-    public void setAddress(String address) {
-
-        this.address = address;
-    }
-
-    public void setContactId(String contactId) {
-
-        this.contactId = contactId;
+        this.timetamp = timetamp;
     }
 
     public void setContactId_string(String contactId_string) {
@@ -89,9 +62,15 @@ public class ItemFormSMS {
         this.contactId_string = contactId_string;
     }
 
-    public void setTimestamp(String timestamp) {
 
-        this.timestamp = timestamp;
+    public void setmType(String mType) {
+
+        this.mType = mType;
+    }
+
+    public void setAddress(String address) {
+
+        this.address = address;
     }
 
     public void setBody(String body) {
