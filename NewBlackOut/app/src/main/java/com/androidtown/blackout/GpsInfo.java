@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,8 +41,6 @@ public class GpsInfo extends Service implements LocationListener {
 
     ArrayList<String> listLat;
     ArrayList<String> listLng;
-
-    MediaPlayer mp;
 
     NotificationManager notifManager;
     String channelld = "BO channel";
@@ -82,8 +79,7 @@ public class GpsInfo extends Service implements LocationListener {
         getLocation();
 
         Log.d("test", "서비스의 onCreate");
-        mp = MediaPlayer.create(this, R.raw.chacha);
-        mp.setLooping(true);
+
     }
 
     public Location getLocation() {
@@ -202,7 +198,6 @@ public class GpsInfo extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("test", "서비스의 onStratCommand");
-        mp.start();
 
         //startForeground(1, new Notification());
 
@@ -216,7 +211,7 @@ public class GpsInfo extends Service implements LocationListener {
         super.onDestroy();
         Log.d("test", "서비스의 onDestroy");
         stopUsingGPS();
-        mp.stop();
+
         Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
         intent.putStringArrayListExtra("lat", listLat);
         intent.putStringArrayListExtra("lng", listLng);
