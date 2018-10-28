@@ -242,8 +242,8 @@ public class GpsInfo extends Service implements LocationListener {
                 .setContentText("Black Out 실행중 입니다 =)")
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(false)
-                .setSmallIcon(R.drawable.smalldrunk_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.smalldrunk_notification))
+                .setSmallIcon(R.drawable.drunk_1)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.drunk_1))
                 .setContentIntent(pendingIntent);
 
         startForeground(1, builder.build());

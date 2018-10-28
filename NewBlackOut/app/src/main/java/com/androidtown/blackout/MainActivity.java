@@ -161,9 +161,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(getButtonDB() == 0){
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_1);
+            main.setBackground(drawable);
 
         }else{
-            Drawable drawable = getResources().getDrawable(R.drawable.moon);
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_2);
             main.setBackground(drawable);
 
         }
