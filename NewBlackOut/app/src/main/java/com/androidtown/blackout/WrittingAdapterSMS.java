@@ -69,7 +69,7 @@ public class WrittingAdapterSMS extends RecyclerView.Adapter<WrittingAdapterSMS.
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(activity, "터치 받으면 펼쳐지거나 다른 뷰가 추가되서 넓어짐", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "터치 이벤트", Toast.LENGTH_LONG).show();
                     ;
                 }
             });

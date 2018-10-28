@@ -70,26 +70,13 @@ public class TimeFragment extends Fragment {
         }
         c = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, null);
 
+
+
         btnSMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("@@@@@@@@@@@@@@@@@@555", "@@@@@@@@@@@@@@@@@@555");
                 ArrayList<ItemFormSMS> listSms = new ArrayList<>();
                 Activity activity = (ResultActivity)getActivity();
-
-                /*
-                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Log.e("@@@@@4445", "@@@@@4445");
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_SMS},4);
-                }
-                */
                 c1 = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(Uri.parse("content://sms"),
                         new String[] { "date", "person", "type" , "address" , "body", "read" }, null, null, "date DESC");
 
@@ -112,21 +99,17 @@ public class TimeFragment extends Fragment {
                     if (type == 1){
                         mType = "수신 : " + address;
                     }else{
-                        mType = "발신 : "+  address;
-                    }
+                        mType = "발신 : "+  address; }
                     //내용
                     String body = c1.getString(4);
                     //읽음여부
                     long read = c1.getLong(5);
-
                     listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.kkko2));
                 }
-
                 c1.close();
                 wadapterSMS = new WrittingAdapterSMS(activity, listSms);
                 wadapterSMS.notifyDataSetChanged();
                 rcv.setAdapter(wadapterSMS);
-
             }
         });
 
@@ -135,12 +118,9 @@ public class TimeFragment extends Fragment {
             public void onClick(View view) {
                 ArrayList<ItemForm> list = new ArrayList<>();//ItemFrom에서 받게되는 데이터를 어레이 리스트화 시킨다.
                 Activity activity = (ResultActivity)getActivity();
-
                 c = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, null);
 
-
                 while (c.moveToNext()) {
-                    Log.e("@@@@@44", "@@@@@44");
 
                     String type;
                     // 날짜시간
@@ -162,10 +142,7 @@ public class TimeFragment extends Fragment {
 
                     list.add(new ItemForm(date_str,R.drawable.kkko2,name,pNumber,duration));
                 }// end while
-                c.close();Log.e("@@@@@55", "@@@@@55");
-
-
-
+                c.close();
                 wadapter = new WrittingAdapter(activity, list);
                 wadapter.notifyDataSetChanged();
                 rcv.setAdapter(wadapter);
@@ -175,6 +152,7 @@ public class TimeFragment extends Fragment {
 
 
 
+        //프래그먼트 최초 노출시 기본으로 한번 띄워주기위함(통화목록)
         while (c.moveToNext()) {
             Log.e("@@@@@44", "@@@@@44");
 

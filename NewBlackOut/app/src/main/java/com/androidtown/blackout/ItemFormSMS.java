@@ -62,7 +62,6 @@ public class ItemFormSMS {
         this.contactId_string = contactId_string;
     }
 
-
     public void setmType(String mType) {
 
         this.mType = mType;
