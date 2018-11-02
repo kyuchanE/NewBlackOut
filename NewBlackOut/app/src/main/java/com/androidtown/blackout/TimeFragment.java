@@ -43,7 +43,7 @@ public class TimeFragment extends Fragment {
         Log.e("@@@@@", "@@@@@");
         Activity activity = (ResultActivity)getActivity();
         ArrayList<ItemForm> list = new ArrayList<>();//ItemFrom에서 받게되는 데이터를 어레이 리스트화 시킨다.
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_SMS},4);
+        //ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_SMS},4);
 
 
         //*1time위해 추가한것

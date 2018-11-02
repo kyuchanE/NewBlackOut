@@ -10,4 +10,11 @@
     <color name="DimGray">#FF696969</color>
     <color name="Ivory">#FFF8F9FF</color>
     <color name="lightgray">#D3D3D3</color>
+
+    <color name="Dark_Primary">#616161</color>
+    <color name="Light_Primary">#F5F5F5</color>
+    <color name="Primary">#9E9E9E</color>
+    <color name="Primary_Text">#212121</color>
+    <color name="SecondaryText">#757575</color>
+    <color name="Divider_Color">#BDBDBD</color>
 </resources>
