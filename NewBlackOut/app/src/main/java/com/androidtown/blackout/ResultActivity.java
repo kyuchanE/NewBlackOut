@@ -98,7 +98,7 @@ public class ResultActivity extends AppCompatActivity {
         toolbar = new ToolBar(ResultActivity.this);
         toolbar.setToolbar();
         toolbar.setHome();
-        toolbar.setMenu();
+        toolbar.setSettings();
     }
 
 }

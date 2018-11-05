@@ -30,9 +30,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ResultActivity" />
 
-        <service android:name=".GpsInfo"
+        <service
+            android:name=".GpsInfo"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ListActivity"></activity>
     </application>
 
 </manifest>

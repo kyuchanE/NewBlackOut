@@ -23,12 +23,12 @@
             app:layout_constraintBottom_toTopOf="@+id/viewLIne">
 
             <ImageView
-                android:id="@+id/btnToolMenu"
+                android:id="@+id/btnSetting"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_menu"
+                android:src="@drawable/ic_settings"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -41,7 +41,7 @@
                 android:gravity="center"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/btnToolMenu"
+                app:layout_constraintLeft_toRightOf="@+id/btnSetting"
                 app:layout_constraintRight_toLeftOf="@+id/btnHome"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>

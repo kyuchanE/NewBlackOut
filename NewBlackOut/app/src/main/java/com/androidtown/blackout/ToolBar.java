@@ -1,5 +1,6 @@
 package com.androidtown.blackout;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,8 +10,9 @@ import android.widget.TextView;
 public class ToolBar {
     private AppCompatActivity mActivity;
     private android.support.v7.widget.Toolbar tbMainbar;
-    private DrawerLayout mDrawerLayout;
-    private View mDrawerView;
+
+    ImageView btnHome;
+
 
     public ToolBar(AppCompatActivity activity){
         mActivity = activity;
@@ -31,7 +33,7 @@ public class ToolBar {
     }
 
     public void setHome(){
-        ImageView btnHome = mActivity.findViewById(R.id.btnHome);
+        btnHome = mActivity.findViewById(R.id.btnHome);
         btnHome.setVisibility(View.VISIBLE);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -43,24 +45,34 @@ public class ToolBar {
 
     }
 
-    //Toolbar 버튼 클릭시 기능 설정 Buttom -> (Slide Menu)
-    public void setMenu(){
+    public void setList(){
+        btnHome = mActivity.findViewById(R.id.btnHome);
+        btnHome.setImageResource(R.drawable.ic_menu);
+        btnHome.setVisibility(View.VISIBLE);
 
-        ImageView btnToolMenu = mActivity.findViewById(R.id.btnToolMenu);
-
-
-        mDrawerLayout = mActivity.findViewById(R.id.dlMenu);
-        mDrawerView = mActivity.findViewById(R.id.drawer);
-
-        //Toolbar의 Menu버튼 클릭 Drawer 열기
-        btnToolMenu.setOnClickListener(new View.OnClickListener() {
+        btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(mDrawerView);
-                mDrawerLayout.setClickable(true);
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, ListActivity.class);
+                mActivity.startActivity(intent);
+            }
+        });
+
+
+    }
+
+    public void setSettings(){
+        ImageView ivSettings = mActivity.findViewById(R.id.btnSetting);
+
+        ivSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, SettingsActivity.class);
+                mActivity.startActivity(intent);
             }
         });
     }
+
 
 
 }

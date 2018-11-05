@@ -153,8 +153,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ToolBar toolbar = new ToolBar(MainActivity.this);
-        toolbar.setMenu();
         toolbar.setToolbar();
+        toolbar.setSettings();
+        toolbar.setList();
     }
 
     @Override
