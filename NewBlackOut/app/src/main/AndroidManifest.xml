@@ -36,7 +36,8 @@
             android:exported="true" />
 
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".ListActivity"></activity>
+        <activity android:name=".ListActivity" />
+        <activity android:name=".ListFindActivity"></activity>
     </application>
 
 </manifest>

@@ -23,8 +23,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     ServiceConnection mConnection;
 
     int bNum;
+
 
     ConstraintLayout main;
 
@@ -86,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 Date dt = new Date();
-                SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm a");
-                Log.e("@@@@@DATE@@@@@@", time.format(dt).toString());
+                SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+                Toast.makeText(getApplicationContext(), time.format(dt).toString(), Toast.LENGTH_SHORT).show();
 
                 if(Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         stopService(service);
 
                         setButtonDB(0);
+
 
                     }
                 }
@@ -205,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cursor.close();
+        sqlDB.close();
 
         return bNum;
     }
@@ -216,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
             btnStart.setText("결과보기");
         }
     }
+
 
 
 }

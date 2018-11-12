@@ -31,6 +31,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
+
+            //TODO 종료시간 설정 ( 시간 값을 넘겨주기 )
             @Override
             public void onClick(View v) {
 

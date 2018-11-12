@@ -23,7 +23,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GpsInfo extends Service implements LocationListener {
 
@@ -45,6 +47,10 @@ public class GpsInfo extends Service implements LocationListener {
     NotificationManager notifManager;
     String channelld = "BO channel";
     String channelName = "Black Out";
+
+    private String saveLat = "", saveLng = "";
+
+    ListDBHelper listDBHelper;
 
 
     //최소 GPS 정보 업데이트 거리 5미터
@@ -77,6 +83,8 @@ public class GpsInfo extends Service implements LocationListener {
         listLng = new ArrayList<>();
         listLat = new ArrayList<>();
         getLocation();
+
+        listDBHelper = new ListDBHelper(MainActivity.mContext);
 
         Log.d("test", "서비스의 onCreate");
 
@@ -140,14 +148,14 @@ public class GpsInfo extends Service implements LocationListener {
         }
     }
 
-    public double getLatitude() {
+    public double setLatitude() {
         if (location != null) {
             lat = location.getLatitude();
         }
         return lat;
     }
 
-    public double getLongtitude() {
+    public double setLongtitude() {
         if (location != null) {
             lon = location.getLongitude();
         }
@@ -158,11 +166,11 @@ public class GpsInfo extends Service implements LocationListener {
         return isGetLocation;
     }
 
-    public ArrayList<String> setLatList() {
+    public ArrayList<String> getLatList() {
         return listLat;
     }
 
-    public ArrayList<String> setLngList() {
+    public ArrayList<String> getLngList() {
         return listLng;
     }
 
@@ -209,6 +217,10 @@ public class GpsInfo extends Service implements LocationListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        Date dt = new Date();
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+
         Log.d("test", "서비스의 onDestroy");
         stopUsingGPS();
 
@@ -216,6 +228,12 @@ public class GpsInfo extends Service implements LocationListener {
         intent.putStringArrayListExtra("lat", listLat);
         intent.putStringArrayListExtra("lng", listLng);
         Log.e("@@@gpsDestroy/lat[0]@@@", listLat.get(0));
+
+        makeMapList(listLat, listLng);
+
+        listDBHelper.onSave(time.format(dt), saveLat, saveLng);
+
+
         startActivity(intent);
     }
 
@@ -247,6 +265,20 @@ public class GpsInfo extends Service implements LocationListener {
                 .setContentIntent(pendingIntent);
 
         startForeground(1, builder.build());
+    }
+
+
+    public void makeMapList(ArrayList latList, ArrayList lngList){
+
+        for(int i = 0; i < latList.size(); i++){
+            saveLat += latList.get(0) + "/";
+        }
+
+
+        for(int i = 0; i < lngList.size(); i++){
+            saveLng += lngList.get(0) + "/";
+        }
+
     }
 
 }

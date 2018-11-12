@@ -4,6 +4,8 @@ public class ItemList {
     String itemDate;
     String itemTime;
 
+    // 이전 기록 불러오는 item 형식
+    //TODO item 형식 만들기
     public ItemList(String itemDate, String itemTime) {
         this.itemDate = itemDate;
         this.itemTime = itemTime;
