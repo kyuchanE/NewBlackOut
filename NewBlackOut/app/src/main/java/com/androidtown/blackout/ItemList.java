@@ -1,29 +1,37 @@
 package com.androidtown.blackout;
 
 public class ItemList {
-    String itemDate;
-    String itemTime;
+    String date;
+    String lat;
+    String lng;
 
-    // 이전 기록 불러오는 item 형식
-    //TODO item 형식 만들기
-    public ItemList(String itemDate, String itemTime) {
-        this.itemDate = itemDate;
-        this.itemTime = itemTime;
+    public ItemList(String date, String lat, String lng) {
+        this.date = date;
+        this.lat = lat;
+        this.lng = lng;
     }
 
-    public String getItemDate() {
-        return itemDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setItemDate(String itemDate) {
-        this.itemDate = itemDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getItemTime() {
-        return itemTime;
+    public String getLat() {
+        return lat;
     }
 
-    public void setItemTime(String itemTime) {
-        this.itemTime = itemTime;
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }

@@ -49,6 +49,8 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListActivity.this, ListFindActivity.class);
                 startActivity(intent);
 
+                finish();
+
             }
         });
     }

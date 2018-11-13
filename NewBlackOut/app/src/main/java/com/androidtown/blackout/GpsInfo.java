@@ -52,6 +52,8 @@ public class GpsInfo extends Service implements LocationListener {
 
     ListDBHelper listDBHelper;
 
+    SimpleDateFormat time;
+
 
     //최소 GPS 정보 업데이트 거리 5미터
     private static final long MIN_DISTANCE = 1;
@@ -209,6 +211,8 @@ public class GpsInfo extends Service implements LocationListener {
 
         //startForeground(1, new Notification());
 
+        time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+
         setNotification();
 
         return super.onStartCommand(intent, flags, startId);
@@ -219,7 +223,7 @@ public class GpsInfo extends Service implements LocationListener {
         super.onDestroy();
 
         Date dt = new Date();
-        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+
 
         Log.d("test", "서비스의 onDestroy");
         stopUsingGPS();
