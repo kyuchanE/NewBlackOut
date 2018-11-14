@@ -57,7 +57,6 @@ public class ListFindActivity extends AppCompatActivity {
 
         }
 
-
         cursor.close();
         sql.close();
 
@@ -86,4 +85,5 @@ public class ListFindActivity extends AppCompatActivity {
 
 
     }
+
 }

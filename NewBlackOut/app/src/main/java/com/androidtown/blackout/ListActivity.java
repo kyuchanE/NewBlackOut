@@ -31,9 +31,7 @@ public class ListActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        /*getSupportFragmentManager().beginTransaction().replace(R.id.flMap, listGpsFragment).commit();
-        getSupportFragmentManager().beginTransaction().addToBackStack(null);
-        getSupportFragmentManager().beginTransaction().commit();*/
+        setIsMap();
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +51,27 @@ public class ListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setIsMap(){
+        String lat, lng, date;
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("lat") != null) {
+
+            lat = intent.getStringExtra("lat");
+            lng = intent.getStringExtra("lng");
+            date = intent.getStringExtra("date");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("lat", lat);
+            bundle.putString("lng", lng);
+            bundle.putString("date", date);
+            listGpsFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.flMap, listGpsFragment).commit();
+            getSupportFragmentManager().beginTransaction().addToBackStack(null);
+            getSupportFragmentManager().beginTransaction().commit();
+        }
     }
 }

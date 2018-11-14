@@ -22,6 +22,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     ArrayList<ItemList> dateList;
     Context context;
 
+
     public ListAdapter(ArrayList<ItemList> dateList, Context context) {
         this.dateList = dateList;
         this.context = context;
@@ -36,15 +37,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(ListAdapter.MyViewHolder myViewHolder, int i) {
-        myViewHolder.tvDate.setText(dateList.get(i).getDate());
+        final int position = i;
+        myViewHolder.tvDate.setText(dateList.get(position).getDate());
 
         myViewHolder.llDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ListActivity.class);
+                intent.putExtra("lat", dateList.get(position).getLat());
+                intent.putExtra("lng", dateList.get(position).getLng());
+                intent.putExtra("date", dateList.get(position).getDate());
                 context.startActivity(intent);
 
                 ((Activity)context).finish();
+
             }
         });
     }
