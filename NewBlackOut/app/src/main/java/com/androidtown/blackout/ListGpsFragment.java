@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,33 +31,42 @@ public class ListGpsFragment extends Fragment implements OnMapReadyCallback {
 
     String mLat[], mLng[];
 
+    String lat, lng, date;
+
     View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Bundle bundle = getArguments();
+        lat = bundle.getString("lat");
+        lng = bundle.getString("lng");
+        date = bundle.getString("date");
+
+        makeArray(lat, lng);
+
+        polyline = new PolylineOptions();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_listgps, container, false);
+        try{
+            view = inflater.inflate(R.layout.fragment_listgps, container, false);
 
-        polyline = new PolylineOptions();
+            TextView tvListDate  = view.findViewById(R.id.tvListDate);
+            tvListDate.setText(date);
 
-        String lat = getArguments().getString("lat");
-        String lng = getArguments().getString("lng");
-        String date = getArguments().getString("date");
+            mapFrag = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.listmap);
+            mapFrag.getMapAsync(this);
 
-        TextView tvListDate  = view.findViewById(R.id.tvListDate);
-        tvListDate.setText(date);
+        }catch (InflateException e){
 
-        makeArray(lat, lng);
+        }
 
-
-        mapFrag = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.listmap);
-        mapFrag.getMapAsync(this);
 
         return view;
     }
@@ -69,17 +79,19 @@ public class ListGpsFragment extends Fragment implements OnMapReadyCallback {
 
         polyline.geodesic(true);
 
-        for(int i = 0; i< mLat.length; i++){
-            polyline.add(new LatLng(Double.valueOf(mLat[i]), Double.valueOf(mLng[i])));
+        for(int i = 0; i < mLat.length; i++){
+            polyline.add(new LatLng(Double.parseDouble(mLat[i]), Double.parseDouble(mLng[i])));
         }
         mMap.addPolyline(polyline);
 
 
-        LatLng point = new LatLng(Double.valueOf(mLat[0]), Double.valueOf(mLng[0]));
+        LatLng point = new LatLng(Double.parseDouble(mLat[0]), Double.parseDouble(mLng[0]));
         marker.position(point).title("시작");
         mMap.addMarker(marker);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15));
+
+        return;
 
     }
 
@@ -87,6 +99,7 @@ public class ListGpsFragment extends Fragment implements OnMapReadyCallback {
 
         mLat = lat.split("/");
         mLng = lng.split("/");
+        Toast.makeText(getActivity(), String.valueOf(mLat.length), Toast.LENGTH_SHORT).show();
 
 
     }

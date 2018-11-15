@@ -275,12 +275,12 @@ public class GpsInfo extends Service implements LocationListener {
     public void makeMapList(ArrayList latList, ArrayList lngList){
 
         for(int i = 0; i < latList.size(); i++){
-            saveLat += latList.get(0) + "/";
+            saveLat += latList.get(i) + "/";
         }
 
 
         for(int i = 0; i < lngList.size(); i++){
-            saveLng += lngList.get(0) + "/";
+            saveLng += lngList.get(i) + "/";
         }
 
     }
