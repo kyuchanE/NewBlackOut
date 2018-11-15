@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,6 +54,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
             }
         });
+
+
+        myViewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((ListFindActivity)context).itemDelete(dateList.get(position).getDate());
+
+                dateList.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
     }
 
     @Override
@@ -63,12 +77,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tvDate;
         LinearLayout llDate;
+        ImageView ivDelete;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvDate = itemView.findViewById(R.id.tvDate);
             llDate = itemView.findViewById(R.id.llDate);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
         }
     }
 }

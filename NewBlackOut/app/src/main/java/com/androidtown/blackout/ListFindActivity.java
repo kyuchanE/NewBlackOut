@@ -44,6 +44,38 @@ public class ListFindActivity extends AppCompatActivity {
 
         context = this;
 
+        setRecyclerView();
+
+        ImageView ivBack = findViewById(R.id.ivBack);
+
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListFindActivity.this, ListActivity.class);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+
+
+    }
+
+    public void itemDelete(String date){
+
+        SQLiteDatabase sql = listDBHelper.getWritableDatabase();
+        sql.execSQL("DELETE FROM resultList WHERE Title = '" + date + "';");
+
+        sql.close();
+
+
+
+    }
+
+    public void setRecyclerView(){
+
         SQLiteDatabase sql = listDBHelper.getReadableDatabase();
 
         cursor = sql.rawQuery("SELECT * FROM resultList", null);
@@ -68,21 +100,6 @@ public class ListFindActivity extends AppCompatActivity {
         listAdapter = new ListAdapter(dateList, context);
 
         rvList.setAdapter(listAdapter);
-
-
-        ImageView ivBack = findViewById(R.id.ivBack);
-
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListFindActivity.this, ListActivity.class);
-                startActivity(intent);
-
-                finish();
-            }
-        });
-
 
     }
 
