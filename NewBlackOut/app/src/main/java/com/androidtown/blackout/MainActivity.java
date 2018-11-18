@@ -25,9 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
 
         main = findViewById(R.id.main);
-
-        changeButton(getButtonDB());
 
         mConnection = new ServiceConnection() {
             @Override
@@ -135,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent service = new Intent(getApplicationContext(), GpsInfo.class);
                         startService(service);
 
+
                         setButtonDB(1);
 
 
@@ -159,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
         ToolBar toolbar = new ToolBar(MainActivity.this);
         toolbar.setToolbar();
-        toolbar.setSettings();
         toolbar.setList();
     }
 
@@ -167,12 +163,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(getButtonDB() == 0){
-            Drawable drawable = getResources().getDrawable(R.drawable.landscap_1);
+            Drawable drawable = getResources().getDrawable(R.drawable.out_back1);
             main.setBackground(drawable);
 
+            Drawable drawable1 = getResources().getDrawable(R.drawable.start);
+            btnStart.setBackground(drawable1);
+
         }else{
-            Drawable drawable = getResources().getDrawable(R.drawable.landscap_2);
+            Drawable drawable = getResources().getDrawable(R.drawable.out_back2);
             main.setBackground(drawable);
+
+            Drawable drawable1 = getResources().getDrawable(R.drawable.result);
+            btnStart.setBackground(drawable1);
 
         }
     }

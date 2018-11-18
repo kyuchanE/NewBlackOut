@@ -1,7 +1,6 @@
 package com.androidtown.blackout;
 
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,18 +58,6 @@ public class ToolBar {
         });
 
 
-    }
-
-    public void setSettings(){
-        ImageView ivSettings = mActivity.findViewById(R.id.btnSetting);
-
-        ivSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mActivity, SettingsActivity.class);
-                mActivity.startActivity(intent);
-            }
-        });
     }
 
 
