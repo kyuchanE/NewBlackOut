@@ -163,14 +163,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(getButtonDB() == 0){
-            Drawable drawable = getResources().getDrawable(R.drawable.out_back1);
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_1);
             main.setBackground(drawable);
 
             Drawable drawable1 = getResources().getDrawable(R.drawable.start);
             btnStart.setBackground(drawable1);
 
         }else{
-            Drawable drawable = getResources().getDrawable(R.drawable.out_back2);
+            Drawable drawable = getResources().getDrawable(R.drawable.landscap_2);
             main.setBackground(drawable);
 
             Drawable drawable1 = getResources().getDrawable(R.drawable.result);
