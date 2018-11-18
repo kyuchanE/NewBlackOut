@@ -104,7 +104,7 @@ public class TimeFragment extends Fragment {
                     String body = c1.getString(4);
                     //읽음여부
                     long read = c1.getLong(5);
-                    listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.kkko2));
+                    listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.message));
                 }
                 c1.close();
                 wadapterSMS = new WrittingAdapterSMS(activity, listSms);
@@ -122,7 +122,7 @@ public class TimeFragment extends Fragment {
 
                 while (c.moveToNext()) {
 
-                    String type;
+                    int imageNumber1 = 0;
                     // 날짜시간
                     long callDate = c.getLong(c.getColumnIndex(CallLog.Calls.DATE));
                     SimpleDateFormat dFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
@@ -133,14 +133,24 @@ public class TimeFragment extends Fragment {
                     String pNumber = c.getString(c.getColumnIndex(CallLog.Calls.NUMBER));
                     //전화타입 구분
                     if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.INCOMING_TYPE) {
-                        pNumber =" 수신 : " + pNumber;
-                    } else {
-                        pNumber =" 발신 : " + pNumber;
+                        pNumber =" 수  신 : " + pNumber;
+                        imageNumber1 = R.drawable.call_incoming;
+                    } else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.OUTGOING_TYPE) {
+                        pNumber =" 발  신 : " + pNumber;
+                        imageNumber1 = R.drawable.call_outgoing;
+                    }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.MISSED_TYPE) {
+                        pNumber =" 부재중 : " + pNumber;
+                        imageNumber1 = R.drawable.call_red;
+                    }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.REJECTED_TYPE) {
+                        pNumber ="수신거부: " + pNumber;
+                        imageNumber1 = R.drawable.call_red;
                     }
                     //통화시간
-                    String duration = c.getString(c.getColumnIndex(CallLog.Calls.DURATION));
+                    int callDur = c.getInt(c.getColumnIndex(CallLog.Calls.DURATION));
+                    SimpleDateFormat durFormat = new SimpleDateFormat("HH:mm:ss");
+                    String duration = durFormat.format(new Date(callDur));
 
-                    list.add(new ItemForm(date_str,R.drawable.kkko2,name,pNumber,duration));
+                    list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
                 }// end while
                 c.close();
                 wadapter = new WrittingAdapter(activity, list);
@@ -154,9 +164,8 @@ public class TimeFragment extends Fragment {
 
         //프래그먼트 최초 노출시 기본으로 한번 띄워주기위함(통화목록)
         while (c.moveToNext()) {
-            Log.e("@@@@@44", "@@@@@44");
 
-            String type;
+            int imageNumber1 = 0;
             // 날짜시간
             long callDate = c.getLong(c.getColumnIndex(CallLog.Calls.DATE));
             SimpleDateFormat dFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
@@ -167,14 +176,22 @@ public class TimeFragment extends Fragment {
             String pNumber = c.getString(c.getColumnIndex(CallLog.Calls.NUMBER));
             //전화타입 구분
             if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.INCOMING_TYPE) {
-                pNumber =" 수신 : " + pNumber;
-            } else {
-                pNumber =" 발신 : " + pNumber;
+                pNumber =" 수  신 : " + pNumber;
+                imageNumber1 = R.drawable.call_incoming;
+            } else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.OUTGOING_TYPE) {
+                pNumber =" 발  신 : " + pNumber;
+                imageNumber1 = R.drawable.call_outgoing;
+            }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.MISSED_TYPE) {
+                pNumber =" 부재중 : " + pNumber;
+                imageNumber1 = R.drawable.call_red;
+            }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.BLOCKED_TYPE) {
+                pNumber ="수신거부: " + pNumber;
+                imageNumber1 = R.drawable.call_red;
             }
             //통화시간
             String duration = c.getString(c.getColumnIndex(CallLog.Calls.DURATION));
 
-            list.add(new ItemForm(date_str,R.drawable.kkko2,name,pNumber,duration));
+            list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
         }// end while
         c.close();Log.e("@@@@@55", "@@@@@55");
 

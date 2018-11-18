@@ -43,7 +43,7 @@ public class ItemForm {
         this.imageNumber = imageNumber1;
     }
     public void setName(String name){
-        this.number = name;
+        this.name = name;
 
     }
     public void setNumber(String number){
@@ -51,7 +51,7 @@ public class ItemForm {
 
     }
     public void setDuration(String duration){
-        this.number = duration;
+        this.duration = duration;
 
     }
 }
