@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     int bNum;
 
 
+
     ConstraintLayout main;
 
     @Override
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 Date dt = new Date();
                 SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
                 Toast.makeText(getApplicationContext(), time.format(dt).toString(), Toast.LENGTH_SHORT).show();
+                //
+
+
 
                 if(Build.VERSION.SDK_INT >= 23 &&
                         ContextCompat.checkSelfPermission((MainActivity.mContext), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -158,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setToolbar();
         toolbar.setList();
     }
+
+
+
 
     @Override
     protected void onResume() {

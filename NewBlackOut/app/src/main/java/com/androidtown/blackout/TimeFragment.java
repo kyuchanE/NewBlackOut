@@ -40,6 +40,7 @@ public class TimeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_time, container, false);
         btnSMS = (Button) view.findViewById(R.id.btn3);
         btnCall = (Button)view.findViewById(R.id.btn2);
+
         Log.e("@@@@@", "@@@@@");
         Activity activity = (ResultActivity)getActivity();
         ArrayList<ItemForm> list = new ArrayList<>();//ItemFrom에서 받게되는 데이터를 어레이 리스트화 시킨다.
@@ -51,6 +52,10 @@ public class TimeFragment extends Fragment {
         llm = new LinearLayoutManager(activity);//종류는 총 3가지, ListView를 사용하기 위한 사용
         rcv.setHasFixedSize(true);//각 아이템이 보여지는 것을 일정하게
         rcv.setLayoutManager(llm);//앞서 선언한 리싸이클러뷰를 레이아웃메니저에 붙힌다
+
+
+        //MainActivity에서 시작시간 받아올 변수
+        SimpleDateFormat startTime = new SimpleDateFormat("MM-dd HH:mm:ss");
 
 
 
@@ -129,6 +134,7 @@ public class TimeFragment extends Fragment {
                     String date_str = dFormat.format(new Date(callDate));
                     // 연락처 대표 이름
                     String name = c.getString(c.getColumnIndex(CallLog.Calls.CACHED_NAME));
+                    if (name == null){name = "알수없음";}
                     //전화번호
                     String pNumber = c.getString(c.getColumnIndex(CallLog.Calls.NUMBER));
                     //전화타입 구분
@@ -141,14 +147,44 @@ public class TimeFragment extends Fragment {
                     }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.MISSED_TYPE) {
                         pNumber =" 부재중 : " + pNumber;
                         imageNumber1 = R.drawable.call_red;
-                    }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.REJECTED_TYPE) {
+                    }else{
                         pNumber ="수신거부: " + pNumber;
                         imageNumber1 = R.drawable.call_red;
                     }
                     //통화시간
-                    int callDur = c.getInt(c.getColumnIndex(CallLog.Calls.DURATION));
-                    SimpleDateFormat durFormat = new SimpleDateFormat("HH:mm:ss");
-                    String duration = durFormat.format(new Date(callDur));
+                    Integer callDur = c.getInt(c.getColumnIndex(CallLog.Calls.DURATION));
+                    Integer result;
+                    String duration = "";
+                    if (callDur != 0) {
+                        int i = 0;
+                        do {
+                            i++;
+                            result = callDur % 60;
+                            callDur = callDur / 60;
+                            if (i == 1) {
+                                if (result < 10) {
+                                    duration = ":0" + result;
+                                }else
+                                    duration = ":"+result;
+                            }else
+                            if (i == 2) {
+                                if (result < 10) {
+                                    duration = ":0" + result + duration;
+                                }else
+                                    duration = ":"+result + duration;
+                            }else
+                            if (i == 3) {
+                                if (result < 10) {
+                                    duration = "0" + result + duration;
+                                }else
+                                    duration =result + duration;
+                            }
+                        } while (i <= 3);
+                    }else {
+                        duration = "00:00:00";
+                    }
+                    Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
+
 
                     list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
                 }// end while
@@ -170,10 +206,13 @@ public class TimeFragment extends Fragment {
             long callDate = c.getLong(c.getColumnIndex(CallLog.Calls.DATE));
             SimpleDateFormat dFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
             String date_str = dFormat.format(new Date(callDate));
+            Log.d("DATE","DDDDDDDDDDDDDDDDDDD"+date_str +"    " +callDate);
             // 연락처 대표 이름
             String name = c.getString(c.getColumnIndex(CallLog.Calls.CACHED_NAME));
+            if (name == null){name = "알수없음";}
             //전화번호
             String pNumber = c.getString(c.getColumnIndex(CallLog.Calls.NUMBER));
+
             //전화타입 구분
             if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.INCOMING_TYPE) {
                 pNumber =" 수  신 : " + pNumber;
@@ -184,12 +223,43 @@ public class TimeFragment extends Fragment {
             }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.MISSED_TYPE) {
                 pNumber =" 부재중 : " + pNumber;
                 imageNumber1 = R.drawable.call_red;
-            }else if (c.getInt(c.getColumnIndex(CallLog.Calls.TYPE)) == CallLog.Calls.BLOCKED_TYPE) {
+            }else {
                 pNumber ="수신거부: " + pNumber;
                 imageNumber1 = R.drawable.call_red;
             }
             //통화시간
-            String duration = c.getString(c.getColumnIndex(CallLog.Calls.DURATION));
+            Integer callDur = c.getInt(c.getColumnIndex(CallLog.Calls.DURATION));
+            Integer result;
+            String duration = "";
+            if (callDur != 0) {
+                int i = 0;
+                do {
+                    i++;
+                    result = callDur % 60;
+                    callDur = callDur / 60;
+                    if (i == 1) {
+                        if (result < 10) {
+                            duration = ":0" + result;
+                        }else
+                        duration = ":"+result;
+                    }else
+                        if (i == 2) {
+                        if (result < 10) {
+                            duration = ":0" + result + duration;
+                        }else
+                            duration = ":"+result + duration;
+                    }else
+                        if (i == 3) {
+                        if (result < 10) {
+                            duration = "0" + result + duration;
+                        }else
+                            duration =result + duration;
+                    }
+                } while (i <= 3);
+            }else {
+                duration = "00:00:00";
+            }
+            Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
             list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
         }// end while
@@ -203,4 +273,6 @@ public class TimeFragment extends Fragment {
 
         return view;
     }
+
+
 }

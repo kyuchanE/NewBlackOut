@@ -40,9 +40,12 @@ public class ResultActivity extends AppCompatActivity {
         listLng = new ArrayList<>();
         listLat = new ArrayList<>();
 
+
         Intent recive = getIntent();
         listLat = recive.getStringArrayListExtra("lat");
         listLng = recive.getStringArrayListExtra("lng");
+
+
         Log.e("@@@Result/lat[0]@@@", listLat.get(0));
 
         bottomView = findViewById(R.id.bottom_navigation);
