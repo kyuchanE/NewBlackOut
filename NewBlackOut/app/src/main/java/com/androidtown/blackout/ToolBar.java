@@ -46,7 +46,7 @@ public class ToolBar {
 
     public void setList(){
         btnHome = mActivity.findViewById(R.id.btnHome);
-        btnHome.setImageResource(R.drawable.ic_menu);
+        btnHome.setImageResource(R.drawable.ic_history);
         btnHome.setVisibility(View.VISIBLE);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
