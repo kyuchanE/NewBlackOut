@@ -1,7 +1,9 @@
 package com.androidtown.blackout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +29,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public ListAdapter(ArrayList<ItemList> dateList, Context context) {
         this.dateList = dateList;
         this.context = context;
+
+
     }
 
     @NonNull
@@ -34,6 +38,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list, viewGroup, false);
         return new MyViewHolder(v);
+
     }
 
     @Override
@@ -41,9 +46,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         final int position = i;
         myViewHolder.tvDate.setText(dateList.get(position).getDate());
 
+
         myViewHolder.llDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, ListActivity.class);
                 intent.putExtra("lat", dateList.get(position).getLat());
                 intent.putExtra("lng", dateList.get(position).getLng());
@@ -60,10 +67,32 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-                ((ListFindActivity)context).itemDelete(dateList.get(position).getDate());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("선택기록 삭제");
 
-                dateList.remove(position);
-                notifyDataSetChanged();
+                alertDialogBuilder.setMessage("저장된 정보를 삭제하시겠습니까?").setCancelable(false)
+                        .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ((ListFindActivity)context).itemDelete(dateList.get(position).getDate());
+
+                                dateList.remove(position);
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.cancel();
+
+                            }
+                        });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
 
             }
         });
