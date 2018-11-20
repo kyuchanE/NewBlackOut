@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     }
 
+
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,7 +45,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ListAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(final ListAdapter.MyViewHolder myViewHolder, int i) {
         final int position = i;
         myViewHolder.tvDate.setText(dateList.get(position).getDate());
 
@@ -66,7 +69,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         myViewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle("선택기록 삭제");
 
@@ -76,9 +78,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
                             public void onClick(DialogInterface dialog, int which) {
 
                                 ((ListFindActivity)context).itemDelete(dateList.get(position).getDate());
-
                                 dateList.remove(position);
-                                notifyDataSetChanged();
+                                //notifyDataSetChanged();
+
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, dateList.size());
 
                             }
                         })
@@ -116,4 +120,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             ivDelete = itemView.findViewById(R.id.ivDelete);
         }
     }
+
+
 }

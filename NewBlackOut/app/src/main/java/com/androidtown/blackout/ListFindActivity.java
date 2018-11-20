@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -95,6 +96,7 @@ public class ListFindActivity extends AppCompatActivity {
         rvList = findViewById(R.id.rvList);
         rvList.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(this);
+        rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setLayoutManager(rvLayoutManager);
 
         listAdapter = new ListAdapter(dateList, context);
