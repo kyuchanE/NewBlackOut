@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,15 @@ public class TimeFragment extends Fragment {
     WrittingAdapterSMS wadapterSMS;
     Cursor c,c1;
     Button btnSMS, btnCall;
+    String startTime;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+        startTime = bundle.getString("start");
+    }
 
     @SuppressLint("MissingPermission")
     @Nullable
@@ -53,9 +63,11 @@ public class TimeFragment extends Fragment {
         rcv.setHasFixedSize(true);//각 아이템이 보여지는 것을 일정하게
         rcv.setLayoutManager(llm);//앞서 선언한 리싸이클러뷰를 레이아웃메니저에 붙힌다
 
+        Toast.makeText(getContext(), startTime, Toast.LENGTH_SHORT).show();
+
 
         //MainActivity에서 시작시간 받아올 변수
-        SimpleDateFormat startTime = new SimpleDateFormat("MM-dd HH:mm:ss");
+        //SimpleDateFormat startTime = new SimpleDateFormat("MM-dd HH:mm:ss");
 
 
 

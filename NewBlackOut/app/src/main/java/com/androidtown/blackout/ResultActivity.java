@@ -23,6 +23,8 @@ public class ResultActivity extends AppCompatActivity {
     private TimeFragment timeFrag;
     private TestFragment testFrag;
 
+    private String startTime;
+
     public static Context mContext;
 
     public ArrayList<String> listLat;
@@ -44,6 +46,7 @@ public class ResultActivity extends AppCompatActivity {
         Intent recive = getIntent();
         listLat = recive.getStringArrayListExtra("lat");
         listLng = recive.getStringArrayListExtra("lng");
+        startTime = recive.getStringExtra("start");
 
 
         Log.e("@@@Result/lat[0]@@@", listLat.get(0));
@@ -59,6 +62,11 @@ public class ResultActivity extends AppCompatActivity {
         bundle.putStringArrayList("lat", listLat);
         bundle.putStringArrayList("lng", listLng);
         gpsFrag.setArguments(bundle);
+
+        Bundle tBundle = new Bundle();
+        tBundle.putString("start", startTime);
+        timeFrag.setArguments(tBundle);
+
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();

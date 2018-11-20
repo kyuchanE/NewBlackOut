@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Date dt = new Date();
                 SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
-                Toast.makeText(getApplicationContext(), time.format(dt).toString(), Toast.LENGTH_SHORT).show();
-                //
+
+                String startTime = time.format(dt);
 
 
 
