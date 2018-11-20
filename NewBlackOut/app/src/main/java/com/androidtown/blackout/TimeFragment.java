@@ -51,6 +51,7 @@ public class TimeFragment extends Fragment {
         btnSMS = (Button) view.findViewById(R.id.btn3);
         btnCall = (Button)view.findViewById(R.id.btn2);
 
+
         Log.e("@@@@@", "@@@@@");
         Activity activity = (ResultActivity)getActivity();
         ArrayList<ItemForm> list = new ArrayList<>();//ItemFrom에서 받게되는 데이터를 어레이 리스트화 시킨다.
@@ -64,10 +65,8 @@ public class TimeFragment extends Fragment {
         rcv.setLayoutManager(llm);//앞서 선언한 리싸이클러뷰를 레이아웃메니저에 붙힌다
 
         Toast.makeText(getContext(), startTime, Toast.LENGTH_SHORT).show();
-
-
-        //MainActivity에서 시작시간 받아올 변수
-        //SimpleDateFormat startTime = new SimpleDateFormat("MM-dd HH:mm:ss");
+        //기준 시간 이후에 기록 있는지 없는지 체크해주는 변수
+        int chk= 0;
 
 
 
@@ -97,9 +96,11 @@ public class TimeFragment extends Fragment {
                 c1 = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(Uri.parse("content://sms"),
                         new String[] { "date", "person", "type" , "address" , "body", "read" }, null, null, "date DESC");
 
-
+                //기준 시간 이후에 기록 있는지 없는지 체크해주는 변수
+                int chk = 0;
                 while  (c1.moveToNext()) {
                     Log.e("@@@@@4445555", "@@@@@4445555");
+
 
                     //날짜
                     long date = c1.getLong(0);
@@ -122,14 +123,18 @@ public class TimeFragment extends Fragment {
                     //읽음여부
                     long read = c1.getLong(5);
 
-
-                    int compare = startTime.compareTo(timetamp);
-                    if(compare <= 0) {
+                    //시작 시간 이후의 값만 가져오기 위해 비교
+                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+                    String chkTimee = chkTime.format(new Date(date));
+                    int compare = startTime.compareTo(chkTimee);
+                    Log.d("SMScompare", ""+ compare);
+                    if(compare <= 0){
                         listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.message));
-                    }else{
-                        listSms.add(new ItemFormSMS("","문자기록없음","","","",0 , 0));
-                        break;
+                        chk++;
                     }
+                }
+                if(chk ==0){
+                    listSms.add(new ItemFormSMS("","문자기록없음","","","",0 , 0));
                 }
                 c1.close();
                 wadapterSMS = new WrittingAdapterSMS(activity, listSms);
@@ -144,6 +149,8 @@ public class TimeFragment extends Fragment {
                 ArrayList<ItemForm> list = new ArrayList<>();//ItemFrom에서 받게되는 데이터를 어레이 리스트화 시킨다.
                 Activity activity = (ResultActivity)getActivity();
                 c = ((ResultActivity)ResultActivity.mContext).getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, null);
+                //기준 시간 이후에 기록 있는지 없는지 체크해주는 변수
+                int chk = 0;
 
                 while (c.moveToNext()) {
 
@@ -205,14 +212,19 @@ public class TimeFragment extends Fragment {
                     }
                     Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
-                    int compare = startTime.compareTo(date_str);
+                    //시작 시간 이후의 값만 가져오기 위해 비교
+                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+                    String chkTimee = chkTime.format(new Date(callDate));
+                    int compare = startTime.compareTo(chkTimee);
+                    Log.d("CALLcompare", ""+ compare);
                     if(compare <= 0) {
                         list.add(new ItemForm(date_str, imageNumber1, name, pNumber, duration));
-                    }else{
-                        list.add(new ItemForm("", 0, "통화기록없음", "", ""));
-                        break;
+                        chk++;
                     }
                 }// end while
+                if(chk==0){
+                    list.add(new ItemForm("", 0, "통화기록없음", "", ""));
+                }
                 c.close();
                 wadapter = new WrittingAdapter(activity, list);
                 wadapter.notifyDataSetChanged();
@@ -286,14 +298,18 @@ public class TimeFragment extends Fragment {
             }
             Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
-            int compare = startTime.compareTo(date_str);
+            //시작 시간 이후의 값만 가져오기 위해 비교
+            SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+            String chkTimee = chkTime.format(new Date(callDate));
+            int compare = startTime.compareTo(chkTimee);
             if(compare <= 0) {
                 list.add(new ItemForm(date_str, imageNumber1, name, pNumber, duration));
-            }else{
-                list.add(new ItemForm("", 0, "통화기록없음", "", ""));
-                break;
+                chk++;
             }
         }// end while
+        if(chk==0){
+            list.add(new ItemForm("", 0, "통화기록없음", "", ""));
+        }
         c.close();Log.e("@@@@@55", "@@@@@55");
 
 
