@@ -52,7 +52,7 @@ public class GpsInfo extends Service implements LocationListener {
 
     ListDBHelper listDBHelper;
 
-    SimpleDateFormat time;
+    SimpleDateFormat time, timef;
     Date dt;
 
 
@@ -213,6 +213,7 @@ public class GpsInfo extends Service implements LocationListener {
         //startForeground(1, new Notification());
 
         time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+        timef = new SimpleDateFormat("MM-dd HH:mm:ss");
         dt = new Date();
 
         setNotification();
@@ -230,7 +231,7 @@ public class GpsInfo extends Service implements LocationListener {
         Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
         intent.putStringArrayListExtra("lat", listLat);
         intent.putStringArrayListExtra("lng", listLng);
-        intent.putExtra("start", time.format(dt));
+        intent.putExtra("start", timef.format(dt));
         Log.e("@@@gpsDestroy/lat[0]@@@", listLat.get(0));
 
         makeMapList(listLat, listLng);

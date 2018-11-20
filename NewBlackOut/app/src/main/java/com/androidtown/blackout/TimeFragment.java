@@ -121,7 +121,15 @@ public class TimeFragment extends Fragment {
                     String body = c1.getString(4);
                     //읽음여부
                     long read = c1.getLong(5);
-                    listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.message));
+
+
+                    int compare = startTime.compareTo(timetamp);
+                    if(compare <= 0) {
+                        listSms.add(new ItemFormSMS(timetamp,contactId_string,mType,address,body,read , R.drawable.message));
+                    }else{
+                        listSms.add(new ItemFormSMS("","문자기록없음","","","",0 , 0));
+                        break;
+                    }
                 }
                 c1.close();
                 wadapterSMS = new WrittingAdapterSMS(activity, listSms);
@@ -197,8 +205,13 @@ public class TimeFragment extends Fragment {
                     }
                     Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
-
-                    list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
+                    int compare = startTime.compareTo(date_str);
+                    if(compare <= 0) {
+                        list.add(new ItemForm(date_str, imageNumber1, name, pNumber, duration));
+                    }else{
+                        list.add(new ItemForm("", 0, "통화기록없음", "", ""));
+                        break;
+                    }
                 }// end while
                 c.close();
                 wadapter = new WrittingAdapter(activity, list);
@@ -253,15 +266,15 @@ public class TimeFragment extends Fragment {
                         if (result < 10) {
                             duration = ":0" + result;
                         }else
-                        duration = ":"+result;
+                            duration = ":"+result;
                     }else
-                        if (i == 2) {
+                    if (i == 2) {
                         if (result < 10) {
                             duration = ":0" + result + duration;
                         }else
                             duration = ":"+result + duration;
                     }else
-                        if (i == 3) {
+                    if (i == 3) {
                         if (result < 10) {
                             duration = "0" + result + duration;
                         }else
@@ -273,7 +286,13 @@ public class TimeFragment extends Fragment {
             }
             Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
-            list.add(new ItemForm(date_str,imageNumber1,name,pNumber,duration));
+            int compare = startTime.compareTo(date_str);
+            if(compare <= 0) {
+                list.add(new ItemForm(date_str, imageNumber1, name, pNumber, duration));
+            }else{
+                list.add(new ItemForm("", 0, "통화기록없음", "", ""));
+                break;
+            }
         }// end while
         c.close();Log.e("@@@@@55", "@@@@@55");
 
