@@ -83,7 +83,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback{
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startpoint, 15));
 
         Log.e("@@@@@", String.valueOf(listLat.size()));
-        Toast.makeText(getActivity(), "몇번" + String.valueOf(listLat.size()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "몇번" + String.valueOf(listLat.size()), Toast.LENGTH_SHORT).show();
 
 
         return;

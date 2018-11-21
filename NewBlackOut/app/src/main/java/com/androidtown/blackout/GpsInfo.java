@@ -140,7 +140,7 @@ public class GpsInfo extends Service implements LocationListener {
         listLng.add(Double.toString(lon));
         Log.e("Lat 1st", Double.toString(lat));
         Log.e("Lng 1st", Double.toString(lon));
-        Toast.makeText(MainActivity.mContext, "시작" + Double.toString(lat) + "/" + Double.toString(lon), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.mContext, "시작" + Double.toString(lat) + "/" + Double.toString(lon), Toast.LENGTH_SHORT).show();
         return location;
     }
 
@@ -187,7 +187,7 @@ public class GpsInfo extends Service implements LocationListener {
         listLng.add(Double.toString(lon));
         Log.e("Lat", Double.toString(lat));
         Log.e("Lng", Double.toString(lon));
-        Toast.makeText(MainActivity.mContext, "위치변화" + Double.toString(lat) + "/" + Double.toString(lon), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.mContext, "위치변화" + Double.toString(lat) + "/" + Double.toString(lon), Toast.LENGTH_SHORT).show();
 
     }
 

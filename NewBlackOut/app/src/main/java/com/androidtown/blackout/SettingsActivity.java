@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(MainActivity.mContext, String.valueOf(hour) + "/" + String.valueOf(min) , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.mContext, String.valueOf(hour) + "/" + String.valueOf(min) , Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
