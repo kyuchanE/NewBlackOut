@@ -124,7 +124,7 @@ public class TimeFragment extends Fragment {
                     long read = c1.getLong(5);
 
                     //시작 시간 이후의 값만 가져오기 위해 비교
-                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss a");
                     String chkTimee = chkTime.format(new Date(date));
                     int compare = startTime.compareTo(chkTimee);
                     Log.d("SMScompare", ""+ compare);
@@ -213,7 +213,7 @@ public class TimeFragment extends Fragment {
                     Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
                     //시작 시간 이후의 값만 가져오기 위해 비교
-                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+                    SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss a");
                     String chkTimee = chkTime.format(new Date(callDate));
                     int compare = startTime.compareTo(chkTimee);
                     Log.d("CALLcompare", ""+ compare);
@@ -299,7 +299,7 @@ public class TimeFragment extends Fragment {
             Log.d("DURATION","HHHHHHHHHHHHHHHHHH"+duration+"    " +callDur);
 
             //시작 시간 이후의 값만 가져오기 위해 비교
-            SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+            SimpleDateFormat chkTime = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss a");
             String chkTimee = chkTime.format(new Date(callDate));
             int compare = startTime.compareTo(chkTimee);
             if(compare <= 0) {

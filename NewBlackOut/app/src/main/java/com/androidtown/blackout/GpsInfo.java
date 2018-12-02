@@ -21,7 +21,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -212,7 +211,7 @@ public class GpsInfo extends Service implements LocationListener {
 
         //startForeground(1, new Notification());
 
-        time = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
+        time = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss a");
         dt = new Date();
 
         setNotification();
